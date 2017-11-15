@@ -1,6 +1,6 @@
 {
   "name": "blob-polyfill",
-  "version": "1.0.20150320",
+  "version": "2.0.20171115",
   "homepage": "https://github.com/bjornstar/blob-polyfill",
   "authors": [
     "Eli Grey <me@eligrey.com>"
@@ -8,7 +8,8 @@
   "description": "Blob.js implements the W3C Blob interface in browsers that do not natively support it.",
   "main": "Blob.js",
   "moduleType": [
-    "amd"
+    "amd",
+    "node"
   ],
   "keywords": [
     "blob",
