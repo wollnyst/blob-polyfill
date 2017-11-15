@@ -14,12 +14,24 @@
 
 /*! @source http://purl.eligrey.com/github/Blob.js/blob/master/Blob.js */
 
-(function (view) {
+(function(global) {
+(function (factory) {
+	if (typeof define === "function" && define.amd) {
+		// AMD. Register as an anonymous module.
+		define(["exports"], factory);
+	} else if (typeof exports === "object" && typeof exports.nodeName !== "string") {
+		// CommonJS
+		factory(exports);
+	} else {
+		// Browser globals
+		factory(global);
+	}
+})(function (exports) {
 	"use strict";
 
-	view.URL = view.URL || view.webkitURL;
+	exports.URL = global.URL || global.webkitURL;
 
-	if (view.Blob && view.URL) {
+	if (global.Blob && global.URL) {
 		try {
 			new Blob;
 			return;
@@ -28,7 +40,7 @@
 
 	// Internally we use a BlobBuilder implementation to base Blob off of
 	// in order to support older browsers that only have BlobBuilder
-	var BlobBuilder = view.BlobBuilder || view.WebKitBlobBuilder || view.MozBlobBuilder || (function(view) {
+	var BlobBuilder = global.BlobBuilder || global.WebKitBlobBuilder || global.MozBlobBuilder || (function() {
 		var
 			  get_class = function(object) {
 				return Object.prototype.toString.call(object).match(/^\[object\s(.*)\]$/)[1];
@@ -44,7 +56,7 @@
 			}
 			, FBB_proto = FakeBlobBuilder.prototype
 			, FB_proto = FakeBlob.prototype
-			, FileReaderSync = view.FileReaderSync
+			, FileReaderSync = global.FileReaderSync
 			, FileException = function(type) {
 				this.code = this[this.name = type];
 			}
@@ -53,15 +65,15 @@
 				+ "NO_MODIFICATION_ALLOWED_ERR INVALID_STATE_ERR SYNTAX_ERR"
 			).split(" ")
 			, file_ex_code = file_ex_codes.length
-			, real_URL = view.URL || view.webkitURL || view
+			, real_URL = global.URL || global.webkitURL || exports
 			, real_create_object_URL = real_URL.createObjectURL
 			, real_revoke_object_URL = real_URL.revokeObjectURL
 			, URL = real_URL
-			, btoa = view.btoa
-			, atob = view.atob
+			, btoa = global.btoa
+			, atob = global.atob
 
-			, ArrayBuffer = view.ArrayBuffer
-			, Uint8Array = view.Uint8Array
+			, ArrayBuffer = global.ArrayBuffer
+			, Uint8Array = global.Uint8Array
 
 			, origin = /^[\w-]+:\/*\[?[\w\.:-]+\]?(?::[0-9]+)?/
 		;
@@ -71,7 +83,7 @@
 		}
 		// Polyfill URL
 		if (!real_URL.createObjectURL) {
-			URL = view.URL = function(uri) {
+			URL = exports.URL = function(uri) {
 				var
 					  uri_info = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
 					, uri_origin
@@ -182,9 +194,9 @@
 			delete this.data;
 		};
 		return FakeBlobBuilder;
-	}(view));
+	}());
 
-	view.Blob = function(blobParts, options) {
+	exports.Blob = function(blobParts, options) {
 		var type = options ? (options.type || "") : "";
 		var builder = new BlobBuilder();
 		if (blobParts) {
@@ -207,5 +219,11 @@
 	var getPrototypeOf = Object.getPrototypeOf || function(object) {
 		return object.__proto__;
 	};
-	view.Blob.prototype = getPrototypeOf(new view.Blob());
-}(typeof self !== "undefined" && self || typeof window !== "undefined" && window || this.content || this));
+	exports.Blob.prototype = getPrototypeOf(new exports.Blob());
+});
+})(
+	typeof self !== "undefined" && self ||
+	typeof window !== "undefined" && window ||
+	typeof global !== "undefined" && global ||
+	this.content || this
+);
