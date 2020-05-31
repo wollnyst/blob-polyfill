@@ -21,6 +21,17 @@ To install this library, run:
 $ npm install blob-polyfill --save
 ```
 
+## Usage
+
+CommonJS:
+```js
+var Blob = require('blob-polyfill').Blob;
+```
+
+AMD
+```js
+import { Blob } from 'blob-polyfill';
+```
 
 ## Supported browsers
 

@@ -256,7 +256,7 @@
 
 		function FakeBlobBuilder () {
 			function isDataView (obj) {
-				return obj && DataView.prototype.isPrototypeOf(obj);
+				return obj && Object.prototype.isPrototypeOf.call(DataView, obj);
 			}
 			function bufferClone (buf) {
 				var view = new Array(buf.byteLength);
@@ -352,7 +352,7 @@
 						chunks[i] = chunk._buffer;
 					} else if (typeof chunk === "string") {
 						chunks[i] = textEncode(chunk);
-					} else if (arrayBufferSupported && (ArrayBuffer.prototype.isPrototypeOf(chunk) || isArrayBufferView(chunk))) {
+					} else if (arrayBufferSupported && (Object.prototype.isPrototypeOf.call(ArrayBuffer, chunk) || isArrayBufferView(chunk))) {
 						chunks[i] = bufferClone(chunk);
 					} else if (arrayBufferSupported && isDataView(chunk)) {
 						chunks[i] = bufferClone(chunk.buffer);
@@ -521,7 +521,7 @@
 			);
 
 			// Monkey patched
-			// IE don't set Content-Type header on XHR whose body is a typed Blob
+			// IE doesn't set Content-Type header on XHR whose body is a typed Blob
 			// https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/6047383
 			var _send = global.XMLHttpRequest && global.XMLHttpRequest.prototype.send;
 			if (isIE && _send) {
