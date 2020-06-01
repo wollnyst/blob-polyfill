@@ -1,5 +1,8 @@
 # `blob-polyfill` CHANGELOG
 
+## v4.0.20200601
+* [Blob.js] Populate File and FileReader in exports after confirming File is supported (@bjornstar)
+
 ## v4.0.20200531
 * [Blob.js] Do not attempt to set readonly property Symbols (@bjornstar)
 * [Blob.js] Do not use prototype built-ins (@bjornstar)

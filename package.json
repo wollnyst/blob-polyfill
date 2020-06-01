@@ -1,6 +1,6 @@
 {
   "name": "blob-polyfill",
-  "version": "4.0.20200531",
+  "version": "4.0.20200601",
   "description": "Blob.js implements the W3C Blob interface in browsers that do not natively support it.",
   "main": "Blob.js",
   "scripts": {

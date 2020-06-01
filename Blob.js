@@ -537,6 +537,8 @@
 
 			try {
 				new File([], "");
+				exports.File = global.File;
+				exports.FileReader = global.FileReader;
 			} catch (e) {
 				try {
 					exports.File = new Function("class File extends Blob {" +
