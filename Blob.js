@@ -623,8 +623,9 @@
 		} catch (e) {
 			try {
 				new ReadableStream({});
-				stream = function stream(blob){
+				stream = function stream(){
 					var position = 0;
+					var blob = this;
 
 					return new ReadableStream({
 						pull: function (controller) {
